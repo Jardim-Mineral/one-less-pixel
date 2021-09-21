@@ -11,6 +11,7 @@ function preload() {
   EL.menu = document.getElementById('my-menu-container');
   EL.buttonBack = document.getElementById('my-button-back');
   EL.buttonForward = document.getElementById('my-button-forward');
+  EL.buttonImage = document.getElementById('my-file-input-image');
 
   EL.buttonForward.addEventListener('click', () => {
     currentWidth = max(1, currentWidth - 10);
@@ -20,6 +21,25 @@ function preload() {
   EL.buttonBack.addEventListener('click', () => {
     currentWidth = min(sImage.width, currentWidth + 10);
     sizeImage();
+  });
+
+  EL.buttonImage.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function (readerEvent) {
+      const newImage = new Image();
+      newImage.onload = function (imageEvent) {
+        oImage.resize(newImage.width, newImage.height);
+        oImage.drawingContext.drawImage(newImage, 0, 0, newImage.width, newImage.height,
+                                        0, 0, oImage.width, oImage.height);
+        sizeCanvas();
+
+        if (event.target) event.target.value = '';
+      }
+      newImage.src = readerEvent.target.result;
+    }
+    reader.readAsDataURL(file);
   });
 }
 
