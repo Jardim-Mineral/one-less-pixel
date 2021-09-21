@@ -1,0 +1,32 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.menu-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #fff;
+  width: 100%;
+  z-index: 100;
+  box-sizing: border-box;
+  padding: 0 30%;
+}
+
+.input-button {
+  margin: 20px;
+  padding: 10px 24px;
+  cursor: pointer;
+}
+
+.canvas-container {
+  box-sizing: border-box;
+}
+
+.main-canvas {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
