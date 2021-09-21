@@ -1,9 +1,12 @@
+const EL = {};
 const IMAGE_FILE = './assets/dolomita.jpg';
+const INITIAL_DELTA = 4;
+
 let oImage, sImage, mImage;
 let mImageScale;
-let currentWidth, currentHeight, currentDelta;
+let currentWidth, currentHeight, currentDelta, currentDirection, currentFrameMod;
+let autoPlay;
 
-const EL = {};
 
 function preload() {
   oImage = loadImage(IMAGE_FILE);
@@ -84,7 +87,9 @@ function setup() {
   mCanvas.elt.classList.add('main-canvas');
   smooth();
   currentWidth = width;
-  currentDelta = -1;
+  currentDirection = -1;
+  currentDelta = INITIAL_DELTA;
+  currentFrameMod = 1;
   sizeImage();
   autoPlay = true;
 }
@@ -98,15 +103,17 @@ function windowResized() {
 function draw() {
   background(255);
 
-  if ((frameCount % 2) == 0) {
-    currentWidth = currentWidth + currentDelta;
+  if (autoPlay && ((frameCount % currentFrameMod) == 0)) {
+    currentWidth = currentWidth + currentDirection * currentDelta;
+    currentDelta = (currentWidth > sImage.width / 2) ? INITIAL_DELTA : 1;
+    currentFrameMod = (currentWidth < sImage.width / 4) ? 3 : 1;
+
+    if ((currentWidth < 64) || (currentWidth > sImage.width)) {
+      currentDirection = -currentDirection;
+      currentWidth = constrain(currentWidth, 64, sImage.width);
+    }
+    sizeImage();
   }
 
-  if ((currentWidth < 1) || (currentWidth > sImage.width)) {
-    currentDelta = 0 - currentDelta;
-    currentWidth = constrain(currentWidth, 1, sImage.height);
-  }
-
-  sizeImage();
   image(mImage, 0, 0);
 }
