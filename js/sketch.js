@@ -11,7 +11,8 @@ function preload() {
   EL.menu = document.getElementById('my-menu-container');
   EL.buttonBack = document.getElementById('my-button-back');
   EL.buttonForward = document.getElementById('my-button-forward');
-  EL.buttonImage = document.getElementById('my-file-input-image');
+  EL.buttonPlay = document.getElementById('my-button-play');
+  EL.buttonImage = document.getElementById('my-file-input');
 
   EL.buttonForward.addEventListener('click', () => {
     currentWidth = max(1, currentWidth - 10);
@@ -21,6 +22,13 @@ function preload() {
   EL.buttonBack.addEventListener('click', () => {
     currentWidth = min(sImage.width, currentWidth + 10);
     sizeImage();
+  });
+
+  EL.buttonPlay.addEventListener('click', () => {
+    const cVal = EL.buttonPlay.getAttribute('value');
+    const nVal = cVal == 'PLAY' ? 'PAUSE' : 'PLAY';
+    autoPlay = !autoPlay;
+    EL.buttonPlay.setAttribute('value', nVal);
   });
 
   EL.buttonImage.addEventListener('change', (event) => {
@@ -34,6 +42,7 @@ function preload() {
         oImage.drawingContext.drawImage(newImage, 0, 0, newImage.width, newImage.height,
                                         0, 0, oImage.width, oImage.height);
         sizeCanvas();
+        currentWidth = width;
 
         if (event.target) event.target.value = '';
       }
@@ -77,6 +86,7 @@ function setup() {
   currentWidth = width;
   currentDelta = -1;
   sizeImage();
+  autoPlay = true;
 }
 
 function windowResized() {
