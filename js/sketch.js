@@ -2,7 +2,7 @@ const EL = {};
 const IMAGE_FILE = './assets/dolomita.jpg';
 const INITIAL_DELTA = 4;
 const PIXEL_DELTA = 1;
-const FRAME_SKIP = 1;
+const FRAME_SKIP = 2;
 
 let oImage, sImage, mImage;
 let mImageScale;
