@@ -1,10 +1,12 @@
 const EL = {};
 const IMAGE_FILE = './assets/dolomita.jpg';
 const INITIAL_DELTA = 4;
+const PIXEL_DELTA = 1;
+const FRAME_SKIP = 1;
 
 let oImage, sImage, mImage;
 let mImageScale;
-let currentWidth, currentHeight, currentDelta, currentDirection, currentFrameMod;
+let currentWidth, currentHeight, currentDelta, currentDirection, currentFrameSkip;
 let autoPlay;
 
 
@@ -88,8 +90,8 @@ function setup() {
   smooth();
   currentWidth = width;
   currentDirection = -1;
-  currentDelta = INITIAL_DELTA;
-  currentFrameMod = 1;
+  currentDelta = PIXEL_DELTA;
+  currentFrameSkip = FRAME_SKIP;
   sizeImage();
   autoPlay = true;
 }
@@ -103,10 +105,10 @@ function windowResized() {
 function draw() {
   background(255);
 
-  if (autoPlay && ((frameCount % currentFrameMod) == 0)) {
+  if (autoPlay && ((frameCount % currentFrameSkip) == 0)) {
     currentWidth = currentWidth + currentDirection * currentDelta;
-    currentDelta = (currentWidth > sImage.width / 2) ? INITIAL_DELTA : 1;
-    currentFrameMod = (currentWidth < sImage.width / 4) ? 3 : 1;
+    // currentDelta = (currentWidth > sImage.width / 2) ? INITIAL_DELTA : 1;
+    // currentFrameMod = (currentWidth < sImage.width / 4) ? FRAME_SKIP : 1;
 
     if ((currentWidth < 1) || (currentWidth > sImage.width)) {
       currentDirection = -currentDirection;
