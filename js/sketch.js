@@ -108,9 +108,9 @@ function draw() {
     currentDelta = (currentWidth > sImage.width / 2) ? INITIAL_DELTA : 1;
     currentFrameMod = (currentWidth < sImage.width / 4) ? 3 : 1;
 
-    if ((currentWidth < 64) || (currentWidth > sImage.width)) {
+    if ((currentWidth < 1) || (currentWidth > sImage.width)) {
       currentDirection = -currentDirection;
-      currentWidth = constrain(currentWidth, 64, sImage.width);
+      currentWidth = constrain(currentWidth, 1, sImage.width);
     }
     sizeImage();
   }
